@@ -1,9 +1,8 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-   "scripts": {
+  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,6 +15,12 @@
   "bugs": {
     "url": "https://github.com/p-golinski/todo-list/issues"
   },
-  "homepage": "https://github.com/p-golinski/todo-list#readme"
-
+  "homepage": "https://github.com/p-golinski/todo-list#readme",
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "koa": "^2.12.0",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {},
+  "description": ""
 }
