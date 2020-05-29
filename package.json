@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-   "scripts": {
-  "start": "node server/index.js"
-}
-  "repository": {
+ "repository": {
     "type": "git",
     "url": "git+https://github.com/p-golinski/todo-list.git"
   },
@@ -16,6 +13,9 @@
   "bugs": {
     "url": "https://github.com/p-golinski/todo-list/issues"
   },
+  "scripts": {
+  "start": "node server/index.js"
+}
   "homepage": "https://github.com/p-golinski/todo-list#readme"
 
 }
