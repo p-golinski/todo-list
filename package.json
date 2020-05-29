@@ -23,7 +23,8 @@
   },
   "devDependencies": {},
   "description": ""
+
+}
   "scripts": {
   "start": "node server/index.js"
-}
 }
