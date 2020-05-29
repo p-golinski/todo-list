@@ -17,7 +17,7 @@
     "url": "https://github.com/p-golinski/todo-list/issues"
   },
   "homepage": "https://github.com/p-golinski/todo-list#readme"
-  "scripts", {
+  "scripts" {
   "start": "node server/index.js"
 }
 
