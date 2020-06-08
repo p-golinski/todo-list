@@ -4,6 +4,7 @@ const serve = require('koa-static')
 const app = new Koa()
 const port = process.env.PORT || 3000
 require('./store').init()
+const parse = require('koa-bodyparser')
 
 app.use(serve(path.resolve(__dirname, '..', 'client')))
 
