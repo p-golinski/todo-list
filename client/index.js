@@ -1,5 +1,7 @@
 const addTaskForm = document.querySelector('#addTaskForm')
 const addTaskTitle = document.querySelector('#addTaskForm #title')
+const tasksList = document.querySelector('#tasksList')
+const tasksListMsg = document.querySelector('#tasksListMsg')
 const addTaskBtn = document.querySelector('#addTaskBtn')
 const addTaskMsg = document.querySelector('#addTaskMsg')
 
@@ -46,3 +48,38 @@ addTaskForm.addEventListener('submit', (event) => {
       })
   }, 1000)    
 })
+const listTasks = async () => {
+  tasksList.innerHTML = ''
+  tasksListMsg.classList.remove('is-danger')
+  tasksListMsg.classList.add('is-hidden')
+
+  setTimeout(() => {
+    addTask()
+      .then((response) => {
+        if(response.status == 400){
+          throw Error('Nie można dodać zadania bez tytułu. Podaj tytuł zadania i spróbuj ponownie.')
+        }
+        if (!response.ok && response.status != 400) {
+          throw Error('Wystąpił błąd podczas dodawania zadania. Spróbuj ponownie później.')
+        }
+
+        addTaskMsg.textContent = 'Pomyślnie dodano zadanie.'
+        addTaskMsg.classList.add('is-success')
+        addTaskTitle.value = ''
+        addTaskDescription.value = ''
+
+        listTasks()
+      })
+      .catch((error) => {
+        addTaskMsg.textContent = error.message
+        addTaskMsg.classList.add('is-danger')
+      })
+      .finally(() => {
+        addTaskBtn.classList.remove('is-loading', 'is-disabled')
+        addTaskMsg.classList.remove('is-hidden')
+      })
+  }, 1000)    
+})
+
+
+listTasks()
