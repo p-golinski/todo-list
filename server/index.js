@@ -3,15 +3,12 @@ const Koa = require('koa')
 const serve = require('koa-static')
 const app = new Koa()
 const port = process.env.PORT || 3000
-const require('./store').init()
+require('./store').init()
 const parse = require('koa-bodyparser')
 
 app.use(serve(path.resolve(__dirname, '..', 'client')))
 
-store.init();
-app.use(serve('client'))
 app.use(parse())
-
 
 const userRoutes = require('./routes/users')
 app.use(userRoutes.routes())
