@@ -6,9 +6,9 @@ const app = new Koa()
 const port = process.env.PORT || 3000
 const store = require('./store')
 
-
-
 store.init();
+app.use(serve('client'))
+app.use(parse())
 
 const userRoutes = require('./routes/users')
 app.use(userRoutes.routes())
