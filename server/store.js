@@ -38,9 +38,23 @@ const listTasks = async () => (
     })
   })
 )
+const deleteTask = async ({ id }) => (
+  new Promise((resolve, reject) => {
+    const gen = storage.TableUtilities.entityGenerator
+    const task = {
+      PartitionKey: gen.String('task'),
+      RowKey: gen.String(id)
+    }
+
+    service.deleteEntity(table, task, (error) => {
+      !error ? resolve() : reject()
+    })
+  })
+)
 
 module.exports = {
   init,
   addTask,
   listTasks,
+  deleteTask,
 }
