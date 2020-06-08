@@ -9,8 +9,7 @@ const parse = require('koa-bodyparser')
 app.use(serve(path.resolve(__dirname, '..', 'client')))
 
 store.init();
-app.use(serve('client'))
-app.use(parse())
+
 
 
 const userRoutes = require('./routes/users')
