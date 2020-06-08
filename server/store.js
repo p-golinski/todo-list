@@ -1,6 +1,10 @@
 const storage = require('azure-storage')
 const uuid = require('uuid')
+const retryOperation = new storage.LinearRetryPolicyFilter();
+const loggingOperation = new LoggingFilter();
 const service = storage.createTableService()
+  //.withFilter(loggingOperation)  
+  // .withFilter(retryOperation)
 const table = 'tasks'
 
 const init = async () => (
@@ -11,34 +15,45 @@ const init = async () => (
   })
 )
 
-const addTask = async ({ title }) => (
+const addTask = async ({ title, description }) => (
   new Promise((resolve, reject) => {
     const gen = storage.TableUtilities.entityGenerator
+    console.log('addtask - gen')
     const task = {
       PartitionKey: gen.String('task'),
       RowKey: gen.String(uuid.v4()),
-      title
+      title,
+      description
     }
-
+    console.log('addtask - task')
     service.insertEntity(table, task, (error) => {
+      if(error) {
+        console.log(error);
+      }
       !error ? resolve() : reject()
     })
+    console.log('addtask - insertEntity')
   })
+  ,console.log('addtask - Promise')
 )
+
 const listTasks = async () => (
   new Promise((resolve, reject) => {
     const query = new storage.TableQuery()
-      .select(['RowKey', 'title'])
+      .select(['title', 'description', 'Timestamp', 'RowKey'])
       .where('PartitionKey eq ?', 'task')
 
     service.queryEntities(table, query, null, (error, result) => {
       !error ? resolve(result.entries.map((entry) => ({
         id: entry.RowKey._,
-        title: entry.title._
+        title: entry.title._,
+        description: entry.description._,
+        Timestamp: entry.Timestamp._
       }))) : reject()
     })
   })
 )
+
 const deleteTask = async ({ id }) => (
   new Promise((resolve, reject) => {
     const gen = storage.TableUtilities.entityGenerator
@@ -57,5 +72,5 @@ module.exports = {
   init,
   addTask,
   listTasks,
-  deleteTask,
+  deleteTask
 }
