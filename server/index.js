@@ -3,8 +3,7 @@ const Koa = require('koa')
 const serve = require('koa-static')
 const app = new Koa()
 const port = process.env.PORT || 3000
-require('./store').init()
-
+const require('./store').init()
 
 app.use(serve(path.resolve(__dirname, '..', 'client')))
 
@@ -17,5 +16,3 @@ app.use(taskRoutes.routes())
 app.listen(port)
 
 console.log('App is listening at http://127.0.0.1:3000')
-
-
