@@ -16,3 +16,5 @@ app.use(taskRoutes.routes())
 app.listen(port)
 
 console.log('App is listening at http://127.0.0.1:3000')
+
+require('./store').init()
