@@ -1,4 +1,5 @@
 const storage = require('azure-storage')
+const uuid = require('uuid')
 const service = storage.createTableService()
 const table = 'tasks'
 
