@@ -14,6 +14,6 @@ router.delete('/', async (ctx) => {
   await store.deleteTask(ctx.request.query)
   ctx.status = 200
 })
-})
+
 
 module.exports = router
