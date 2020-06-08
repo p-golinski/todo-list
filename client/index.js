@@ -69,13 +69,8 @@ const listTasks = async () => {
         const title = document.createElement('td')
         title.innerHTML = `<p>${task.title}</p>`
 
-        const actions = document.createElement('td')
-        actions.classList.add('has-text-right')
-        actions.innerHTML = `<button class="button is-small is-primary" id="deleteTask${task.id}" onclick="completeTask('${task.id}');"><span class="icon is-small"><i class="fas fa-check"></i></span></button>`
-
         const row = document.createElement('tr')
         row.appendChild(title)
-        row.appendChild(actions)
 
         tasksList.appendChild(row)
       })
@@ -86,7 +81,7 @@ const listTasks = async () => {
     })
 }
 
-listTasks()
+listTasks() 
 
 const completeTask = (id) => {
   tasksListMsg.classList.remove('is-danger')
@@ -96,24 +91,25 @@ const completeTask = (id) => {
   button.classList.add('is-loading')
 
   setTimeout(() => {
-    fetch(`/api/tasks?id=${id}`, { method: 'DELETE' })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText)
-        }
+  addTask()
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
 
-        tasksListMsg.textContent = 'Pomyślnie usunięto zadanie.'
-        tasksListMsg.classList.add('is-success')
+      addTaskMsg.textContent = 'Pomyślnie dodano zadanie.'
+      addTaskMsg.classList.add('is-success')
+      addTaskTitle.value = ''
 
-        listTasks()
-      })
-      .catch(() => {
-        button.classList.remove('is-loading')
-        tasksListMsg.textContent = 'Wystąpił błąd podczas usuwania zadania. Spróbuj ponownie później.'
-        tasksListMsg.classList.add('is-danger')
-      })
-      .finally(() => {
-        tasksListMsg.classList.remove('is-hidden')
-      })
-  }, 1000)
+      listTasks()
+    })
+    .catch(() => {
+      addTaskMsg.textContent = 'Wystąpił błąd podczas dodawania zadania. Spróbuj ponownie później.'
+      addTaskMsg.classList.add('is-danger')
+    })
+    .finally(() => {
+      addTaskBtn.classList.remove('is-loading', 'is-disabled')
+      addTaskMsg.classList.remove('is-hidden')
+    })
+}, 1000)
 }
