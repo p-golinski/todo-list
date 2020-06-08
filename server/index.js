@@ -3,7 +3,6 @@ const Koa = require('koa')
 const serve = require('koa-static')
 const app = new Koa()
 const port = process.env.PORT || 3000
-require('./store').init()
 
 app.use(serve(path.resolve(__dirname, '..', 'client')))
 
