@@ -1,14 +1,14 @@
-const path = require('path')
 const Koa = require('koa')
+const logger = require('koa-logger')
 const serve = require('koa-static')
+const parse = require('koa-bodyparser')
 const app = new Koa()
 const port = process.env.PORT || 3000
-require('./store').init()
-const parse = require('koa-bodyparser')
+const store = require('./store')
 
-app.use(serve(path.resolve(__dirname, '..', 'client')))
 
-app.use(parse())
+
+store.init();
 
 const userRoutes = require('./routes/users')
 app.use(userRoutes.routes())
